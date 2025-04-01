@@ -1,0 +1,26 @@
+name: Deploy PHP to public_html
+
+on:
+  push:
+    branches:
+      - main  # Change if your branch is different
+
+jobs:
+  deploy:
+    runs-on: self-hosted  # Uses your self-hosted runner
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set Permissions
+        run: chmod -R 755 .  # Ensures files have the right permissions
+
+      - name: Copy Files to public_html
+        run: |
+          rsync -avz --delete ./ /home/test-github/public_html/
+          
+      - name: Set Correct Permissions for Web Access
+        run: |
+          chown -R test-github:test-github /home/test-github/public_html/
+          chmod -R 755 /home/test-github/public_html/
