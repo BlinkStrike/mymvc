@@ -3,8 +3,12 @@ name: Deploy PHP to public_html
 on:
   push:
     branches:
-      - main  # Change if your branch is different
-
+      - main   # Trigger on push to 'main' branch
+  pull_request:
+    branches:
+      - main   # Trigger on PR targeting 'main' branch
+  workflow_dispatch:  # Trigger manually from GitHub UI
+  
 jobs:
   deploy:
     runs-on: self-hosted  # Uses your self-hosted runner
